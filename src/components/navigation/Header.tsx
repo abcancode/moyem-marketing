@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import moyemLogo from "../../assets/images/moyem-logo.png";
 
 const navigationLinks = [
   { label: "Features", href: "#features" },
@@ -16,9 +17,11 @@ export default function Header() {
       <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-6 md:px-10">
         {/* Moyem logo placeholder */}
         <a href="/" className="shrink-0" aria-label="Moyem home">
-          <span className="font-heading text-2xl font-bold tracking-tight text-black">
-            MOYEM
-          </span>
+          <img
+            src={moyemLogo}
+            alt="Moyem"
+            className="h-auto w-[100px] object-contain"
+          />
         </a>
 
         {/* Desktop navigation */}
