@@ -1,4 +1,4 @@
-import { useState, type SubmitEvent } from "react";
+import { useState, type ComponentProps } from "react";
 import { ArrowRight, CheckCircle2, LoaderCircle } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 
@@ -11,7 +11,9 @@ export default function Waitlist() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [message, setMessage] = useState("");
 
-  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+  const handleSubmit: NonNullable<ComponentProps<"form">["onSubmit"]> = async (
+    event,
+  ) => {
     event.preventDefault();
 
     setStatus("loading");
@@ -48,7 +50,7 @@ export default function Waitlist() {
           : "Something went wrong. Please try again.",
       );
     }
-  }
+  };
 
   return (
     <section id="waitlist" className="scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28">
