@@ -89,3 +89,71 @@ input,
 textarea {
   font: inherit;
 }
+
+/* Moyem hero network animations */
+
+@keyframes network-flow {
+  to {
+    stroke-dashoffset: -120;
+  }
+}
+
+@keyframes node-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.25);
+  }
+}
+
+@keyframes node-core {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes label-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.network-flow path {
+  stroke-dasharray: 3 24;
+  animation: network-flow 12s linear infinite;
+}
+
+.network-node-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-pulse 3.8s ease-in-out infinite;
+}
+
+.network-node-core {
+  animation: node-core 3.8s ease-in-out infinite;
+}
+
+.network-label {
+  animation: label-float 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network-flow path,
+  .network-node-glow,
+  .network-node-core,
+  .network-label {
+    animation: none;
+  }
+}
