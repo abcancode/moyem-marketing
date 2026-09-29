@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import moyemLogo from "../../assets/images/moyem-logo.png";
+import moyemLogoLight from "../../assets/images/moyem-logo-light.png";
 import { useTheme } from "../../context/ThemeContext";
 
 const navigationLinks = [
@@ -38,12 +39,11 @@ export default function Header() {
         {/* Moyem logo */}
         <a href="/" className="shrink-0" aria-label="Moyem home">
           <img
-            src={moyemLogo}
+            src={isDark ? moyemLogoLight : moyemLogo}
             alt="Moyem"
             className="h-auto w-[100px] object-contain"
           />
         </a>
-
         {/* Desktop navigation */}
         <nav className="hidden items-center gap-8 md:flex">
           {navigationLinks.map((link) => (
