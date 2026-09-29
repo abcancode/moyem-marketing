@@ -208,7 +208,298 @@ button {
   animation: label-float 5s ease-in-out infinite;
 }
 
-/* Accessibility: respect reduced-motion preferences */
+/* ========================================
+   GETTING STARTED DASHBOARD ANIMATIONS
+======================================== */
+
+/* Dashboard entrance */
+@keyframes gs-dashboard-enter {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Gentle continuous floating */
+@keyframes gs-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Cards appear with a noticeable lift */
+@keyframes gs-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Chart bars grow upward */
+@keyframes gs-bar-grow {
+  from {
+    transform: scaleY(0);
+    opacity: 0.2;
+  }
+
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* Team members slide in */
+@keyframes gs-member-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Team notification appears */
+@keyframes gs-notice-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Active status indicator */
+@keyframes gs-status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.2);
+  }
+}
+
+/* Subtle metric and indicator pulse */
+@keyframes gs-soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* Invite button pulse */
+@keyframes gs-invite-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(13, 148, 136, 0);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0 7px rgba(13, 148, 136, 0.22);
+    transform: scale(1.06);
+  }
+}
+
+/* Business performance chart draws */
+@keyframes gs-chart-draw {
+  from {
+    stroke-dashoffset: 650;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ========================================
+   GETTING STARTED ANIMATION CLASSES
+======================================== */
+
+.gs-dashboard-enter {
+  animation: gs-dashboard-enter 900ms ease-out both;
+}
+
+.gs-float {
+  animation: gs-float 4s ease-in-out 900ms infinite;
+}
+
+.gs-card-enter {
+  animation: gs-card-enter 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gs-bar-grow {
+  transform-origin: bottom;
+  animation: gs-bar-grow 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gs-member-enter {
+  animation: gs-member-enter 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gs-notice-enter {
+  animation: gs-notice-enter 850ms ease-out 900ms both;
+}
+
+.gs-metric-enter {
+  animation: gs-card-enter 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gs-status-pulse {
+  animation: gs-status-pulse 2s ease-in-out infinite;
+}
+
+.gs-soft-pulse {
+  animation: gs-soft-pulse 2s ease-in-out infinite;
+}
+
+.gs-invite-pulse {
+  animation: gs-invite-pulse 2s ease-in-out 1s infinite;
+}
+
+.gs-chart-draw {
+  stroke-dasharray: 650;
+  stroke-dashoffset: 650;
+  animation: gs-chart-draw 2.5s ease-out 500ms forwards;
+}
+
+/* ========================================
+   SCROLL-TRIGGERED REVEAL
+======================================== */
+
+/* Elements begin hidden until observed in the viewport */
+.gs-how-it-works [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  filter: blur(3px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms ease;
+  will-change: opacity, transform, filter;
+}
+
+.gs-how-it-works [data-reveal="left"] {
+  transform: translate3d(-32px, 0, 0);
+}
+
+.gs-how-it-works [data-reveal="right"] {
+  transform: translate3d(32px, 0, 0);
+}
+
+.gs-how-it-works [data-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+/* Pause dashboard animations until their reveal target is visible */
+.gs-how-it-works .gs-dashboard-enter,
+.gs-how-it-works .gs-float,
+.gs-how-it-works .gs-card-enter,
+.gs-how-it-works .gs-bar-grow,
+.gs-how-it-works .gs-member-enter,
+.gs-how-it-works .gs-notice-enter,
+.gs-how-it-works .gs-metric-enter,
+.gs-how-it-works .gs-status-pulse,
+.gs-how-it-works .gs-soft-pulse,
+.gs-how-it-works .gs-invite-pulse,
+.gs-how-it-works .gs-chart-draw {
+  animation-play-state: paused;
+}
+
+/* Start the dashboard animations after its reveal wrapper is visible */
+.gs-how-it-works [data-reveal].is-visible .gs-dashboard-enter,
+.gs-how-it-works [data-reveal].is-visible .gs-float,
+.gs-how-it-works [data-reveal].is-visible .gs-card-enter,
+.gs-how-it-works [data-reveal].is-visible .gs-bar-grow,
+.gs-how-it-works [data-reveal].is-visible .gs-member-enter,
+.gs-how-it-works [data-reveal].is-visible .gs-notice-enter,
+.gs-how-it-works [data-reveal].is-visible .gs-metric-enter,
+.gs-how-it-works [data-reveal].is-visible .gs-status-pulse,
+.gs-how-it-works [data-reveal].is-visible .gs-soft-pulse,
+.gs-how-it-works [data-reveal].is-visible .gs-invite-pulse,
+.gs-how-it-works [data-reveal].is-visible .gs-chart-draw {
+  animation-play-state: running;
+}
+
+/* Dashboard contents appear in sequence */
+.gs-how-it-works [data-stagger] {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 550ms ease,
+    transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gs-how-it-works [data-reveal].is-visible [data-stagger] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.gs-how-it-works [data-reveal].is-visible [data-stagger]:nth-child(1) {
+  transition-delay: 100ms;
+}
+
+.gs-how-it-works [data-reveal].is-visible [data-stagger]:nth-child(2) {
+  transition-delay: 220ms;
+}
+
+.gs-how-it-works [data-reveal].is-visible [data-stagger]:nth-child(3) {
+  transition-delay: 340ms;
+}
+
+.gs-how-it-works [data-reveal].is-visible [data-stagger]:nth-child(4) {
+  transition-delay: 460ms;
+}
+
+.gs-how-it-works [data-reveal].is-visible [data-stagger]:nth-child(5) {
+  transition-delay: 580ms;
+}
+
+.gs-how-it-works [data-reveal].is-visible [data-stagger]:nth-child(6) {
+  transition-delay: 700ms;
+}
+
+/* Scroll-triggered chart-bar entrance */
+.gs-how-it-works .gs-bar-grow {
+  transform-origin: bottom;
+}
+
+.gs-how-it-works [data-reveal].is-visible .gs-bar-grow {
+  animation-play-state: running;
+}
+
+/* ========================================
+   ACCESSIBILITY: REDUCED MOTION
+======================================== */
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -223,5 +514,24 @@ button {
   .network-node-core,
   .network-label {
     animation: none;
+  }
+
+  .gs-how-it-works *,
+  .gs-how-it-works *::before,
+  .gs-how-it-works *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .gs-how-it-works [data-reveal],
+  .gs-how-it-works [data-stagger] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    will-change: auto;
+  }
+
+  .gs-how-it-works .gs-chart-draw {
+    stroke-dashoffset: 0;
   }
 }

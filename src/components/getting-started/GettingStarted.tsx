@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const steps = [
   {
@@ -38,6 +38,7 @@ function StepVisual({
     <div
       role="img"
       aria-label={label}
+      data-reveal
       className="relative flex min-h-[230px] w-full items-center justify-center overflow-hidden rounded-sm border border-white/10 bg-[#0b4947] p-5 sm:min-h-[280px] lg:min-h-[300px]"
     >
       {type === "workspace" && (
@@ -108,9 +109,21 @@ function StepVisual({
 
             <div className="space-y-3">
               {[
-                { initials: "AM", name: "Alex Morgan", role: "Administrator" },
-                { initials: "JD", name: "Jordan Davis", role: "Sales manager" },
-                { initials: "SK", name: "Sam Kelly", role: "Finance" },
+                {
+                  initials: "AM",
+                  name: "Alex Morgan",
+                  role: "Administrator",
+                },
+                {
+                  initials: "JD",
+                  name: "Jordan Davis",
+                  role: "Sales manager",
+                },
+                {
+                  initials: "SK",
+                  name: "Sam Kelly",
+                  role: "Finance",
+                },
               ].map((member, index) => (
                 <div
                   key={member.initials}
@@ -243,169 +256,53 @@ function StepVisual({
 }
 
 export default function GettingStarted() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
-    // Animation styles are scoped to this section.
-    // Reduced-motion preferences are respected below.
+    const section = sectionRef.current;
+
+    if (!section) return;
+
+    const targets = section.querySelectorAll<HTMLElement>("[data-reveal]");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      targets.forEach((target) => target.classList.add("is-visible"));
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: "0px 0px -40px 0px",
+      },
+    );
+
+    targets.forEach((target) => observer.observe(target));
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="how-it-works"
       className="gs-how-it-works bg-[#0d5553] px-5 py-20 text-white sm:px-8 sm:py-24 lg:px-12 lg:py-28"
     >
-      <style>{`
-        @keyframes gs-dashboard-enter {
-          from {
-            opacity: 0;
-            transform: translateY(18px) scale(0.98);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes gs-float {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-5px);
-          }
-        }
-
-        @keyframes gs-card-enter {
-          from {
-            opacity: 0;
-            transform: translateY(12px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes gs-bar-grow {
-          from {
-            transform: scaleY(0.08);
-            opacity: 0.35;
-          }
-          to {
-            transform: scaleY(1);
-            opacity: 1;
-          }
-        }
-
-        @keyframes gs-member-enter {
-          from {
-            opacity: 0;
-            transform: translateX(-14px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes gs-notice-enter {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes gs-soft-pulse {
-          0%, 100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.65;
-          }
-        }
-
-        @keyframes gs-invite-pulse {
-          0%, 100% {
-            box-shadow: 0 0 0 0 rgba(13, 148, 136, 0);
-          }
-          50% {
-            box-shadow: 0 0 0 5px rgba(13, 148, 136, 0.14);
-          }
-        }
-
-        @keyframes gs-chart-draw {
-          from {
-            stroke-dashoffset: 650;
-          }
-          to {
-            stroke-dashoffset: 0;
-          }
-        }
-
-        .gs-dashboard-enter {
-          animation: gs-dashboard-enter 700ms ease-out both;
-        }
-
-        .gs-float {
-          animation: gs-float 5s ease-in-out 800ms infinite;
-        }
-
-        .gs-card-enter {
-          animation: gs-card-enter 600ms ease-out both;
-        }
-
-        .gs-bar-grow {
-          transform-origin: bottom;
-          animation: gs-bar-grow 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
-        }
-
-        .gs-member-enter {
-          animation: gs-member-enter 600ms ease-out both;
-        }
-
-        .gs-notice-enter {
-          animation: gs-notice-enter 650ms ease-out 700ms both;
-        }
-
-        .gs-metric-enter {
-          animation: gs-card-enter 650ms ease-out both;
-        }
-
-        .gs-soft-pulse {
-          animation: gs-soft-pulse 2.8s ease-in-out infinite;
-        }
-
-        .gs-invite-pulse {
-          animation: gs-invite-pulse 2.8s ease-in-out 1s infinite;
-        }
-
-        .gs-chart-draw {
-          stroke-dasharray: 650;
-          stroke-dashoffset: 650;
-          animation: gs-chart-draw 2s ease-out 350ms forwards;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .gs-how-it-works *,
-          .gs-how-it-works *::before,
-          .gs-how-it-works *::after {
-            animation-duration: 0.01ms !important;
-            animation-delay: 0ms !important;
-            animation-iteration-count: 1 !important;
-            scroll-behavior: auto !important;
-          }
-
-          .gs-chart-draw {
-            stroke-dashoffset: 0;
-          }
-        }
-      `}</style>
-
       <div className="mx-auto max-w-7xl">
-        <header className="mx-auto max-w-3xl text-center">
+        <header data-reveal className="mx-auto max-w-3xl text-center">
           <h2 className="font-heading text-xl font-bold uppercase leading-relaxed tracking-normal text-white sm:text-2xl lg:text-3xl">
             Let us get you up and running
             <br className="hidden sm:block" />
@@ -427,6 +324,7 @@ export default function GettingStarted() {
               }`}
             >
               <div
+                data-reveal={index === 1 ? "right" : "left"}
                 className={`${index === 1 ? "lg:order-2 lg:pl-4" : "lg:pr-4"}`}
               >
                 <p className="font-heading text-4xl font-bold leading-none text-[#08b9b5] sm:text-5xl lg:text-6xl">
