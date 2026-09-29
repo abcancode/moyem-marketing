@@ -1,8 +1,11 @@
-/* Plus Jakarta Sans */
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+/* ========================================
+   MOYEM FONTS
+======================================== */
 
-/* Tailwind CSS */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* ========================================
    MOYEM TYPOGRAPHY
@@ -55,11 +58,39 @@
   --font-outline: "Rostex Outline", sans-serif;
   --font-oblique-outline: "Rostex Oblique Outline", sans-serif;
 
-  /* Brand Colors */
+  /* Brand colors */
   --color-moyem-blue: #0f387d;
   --color-moyem-accent: #416bff;
   --color-moyem-teal: #08b9b5;
   --color-moyem-dark: #0d5553;
+}
+
+/* ========================================
+   THEME VARIABLES
+======================================== */
+
+:root {
+  color-scheme: light;
+
+  --moyem-page: #ffffff;
+  --moyem-surface: #f8fafc;
+  --moyem-text: #101828;
+  --moyem-muted: #4b5563;
+  --moyem-border: #e5e7eb;
+  --moyem-header: #ffffff;
+  --moyem-teal: #0d5553;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --moyem-page: #101827;
+  --moyem-surface: #172235;
+  --moyem-text: #f8fafc;
+  --moyem-muted: #cbd5e1;
+  --moyem-border: #334155;
+  --moyem-header: #101827;
+  --moyem-teal: #08b9b5;
 }
 
 /* ========================================
@@ -72,67 +103,71 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--moyem-page);
 }
 
 body {
   margin: 0;
   min-width: 320px;
+  min-height: 100vh;
   font-family: var(--font-body);
-  background: #ffffff;
-  color: #101828;
+  background-color: var(--moyem-page);
+  color: var(--moyem-text);
   -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
 }
 
-/* Form Elements */
 button,
 input,
 textarea {
   font: inherit;
 }
 
-/* Moyem hero network animations */
+button {
+  cursor: pointer;
+}
 
+::selection {
+  background: #08b9b5;
+  color: #ffffff;
+}
+
+/* ========================================
+   MOYEM HERO NETWORK ANIMATIONS
+======================================== */
+
+/* Flowing light along network connections */
 @keyframes network-flow {
   to {
     stroke-dashoffset: -120;
   }
 }
 
+.network-flow path {
+  stroke-dasharray: 3 24;
+  stroke-dashoffset: 0;
+  animation: network-flow 12s linear infinite;
+}
+
+.network-flow-slow path {
+  animation-duration: 20s;
+  animation-direction: reverse;
+}
+
+/* Softly breathing node glow */
 @keyframes node-pulse {
   0%,
   100% {
     opacity: 0.25;
     transform: scale(0.85);
   }
+
   50% {
     opacity: 0.8;
     transform: scale(1.25);
   }
-}
-
-@keyframes node-core {
-  0%,
-  100% {
-    opacity: 0.65;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes label-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-.network-flow path {
-  stroke-dasharray: 3 24;
-  animation: network-flow 12s linear infinite;
 }
 
 .network-node-glow {
@@ -141,15 +176,48 @@ textarea {
   animation: node-pulse 3.8s ease-in-out infinite;
 }
 
+/* Gentle node-center brightness */
+@keyframes node-core {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
 .network-node-core {
   animation: node-core 3.8s ease-in-out infinite;
+}
+
+/* Floating capability labels */
+@keyframes label-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .network-label {
   animation: label-float 5s ease-in-out infinite;
 }
 
+/* Accessibility: respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    transition: none;
+  }
+
   .network-flow path,
   .network-node-glow,
   .network-node-core,

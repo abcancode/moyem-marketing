@@ -122,7 +122,7 @@ export default function HeroNetwork() {
       {features.map((feature, index) => (
         <div
           key={feature.label}
-          className={`network-label absolute ${feature.position} hidden rounded-full border border-[#08B9B5]/30 bg-white/90 px-4 py-2 text-xs font-medium text-[#0D5553] shadow-[0_3px_18px_rgba(8,185,181,0.12)] backdrop-blur-sm sm:block md:px-5 md:py-2.5 md:text-sm`}
+          className={`network-label absolute ${feature.position} hidden rounded-full border border-[#08B9B5]/30 bg-white/90 px-4 py-2 text-xs font-medium text-[#0D5553] shadow-[0_3px_18px_rgba(8,185,181,0.12)] backdrop-blur-sm transition-colors duration-300 dark:border-[#08B9B5]/40 dark:bg-slate-900/90 dark:text-teal-300 sm:block md:px-5 md:py-2.5 md:text-sm`}
           style={{
             animationDelay: `${index * 0.6}s`,
           }}
