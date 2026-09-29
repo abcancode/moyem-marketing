@@ -6,19 +6,23 @@ const footerGroups = [
   {
     title: "PRODUCTS",
     links: [
-      { label: "Features", href: "#features" },
-      { label: "Use Cases", href: "#use-cases" },
+      { label: "Platform", href: "#platform" },
+      { label: "AI & Insights", href: "#ai-insights" },
       { label: "How It Works", href: "#how-it-works" },
-      { label: "Pricing", href: "#pricing" },
+
+      // Uncomment when these sections are available
+      // { label: "Use Cases", href: "#use-cases" },
+      // { label: "Pricing", href: "#pricing" },
     ],
   },
   {
     title: "RESOURCES",
-    links: [
-      { label: "Privacy Policy", href: "#privacy" },
-      { label: "Terms of Service", href: "#terms" },
-    ],
+    links: [{ label: "Join the Waitlist", href: "#waitlist" }],
   },
+
+  /*
+  Uncomment when the legal pages are published.
+
   {
     title: "LEGAL",
     links: [
@@ -28,6 +32,7 @@ const footerGroups = [
       { label: "Cookies Policy", href: "#cookies" },
     ],
   },
+  */
 ];
 
 export default function Footer() {
@@ -36,7 +41,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-[var(--color-page)] px-5 py-12 text-[var(--color-text)] transition-colors duration-300 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-[2.5fr_0.6fr_0.6fr_0.6fr] md:gap-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-[2.5fr_1fr_1fr] md:gap-8">
         {/* Brand */}
         <div className="col-span-2 flex flex-col items-start md:col-span-1">
           <a href="/" aria-label="Moyem home" className="inline-block">
