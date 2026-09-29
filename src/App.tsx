@@ -6,6 +6,7 @@ import GettingStarted from "./components/getting-started/GettingStarted";
 import FinalCTA from "./components/final-cta/FinalCTA";
 import Footer from "./components/footer/Footer";
 import BackToTop from "./components/navigation/BackToTop";
+import Waitlist from "./components/waitlist/Waitlist";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <AIInsights />
         <GettingStarted />
         <FinalCTA />
+        <Waitlist />
 
         <Footer />
         <BackToTop />
