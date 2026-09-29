@@ -8,8 +8,8 @@ const navigationLinks = [
   { label: "Platform", href: "#platform" },
   { label: "AI & Insights", href: "#ai-insights" },
   { label: "How it works", href: "#how-it-works" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "About us", href: "#about" },
+  // { label: "Pricing", href: "#pricing" },
+  // { label: "About us", href: "#about" },
 ];
 
 export default function Header() {
@@ -68,13 +68,12 @@ export default function Header() {
           </a>
 
           {themeButton}
-
-          <a
+          {/* <a
             href="#demo"
             className="rounded-lg bg-gradient-to-r from-[#0D5553] to-[#08B9B5] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
           >
             See a demo
-          </a>
+          </a> */}
         </div>
 
         {/* Mobile actions */}
@@ -119,14 +118,13 @@ export default function Header() {
           >
             Login
           </a>
-
-          <a
+          {/*  <a
             href="#demo"
             onClick={() => setMenuOpen(false)}
             className="w-fit rounded-lg bg-gradient-to-r from-[#0D5553] to-[#08B9B5] px-6 py-3 text-sm font-semibold text-white"
           >
             See a demo
-          </a>
+          </a> */}
         </nav>
       )}
     </header>

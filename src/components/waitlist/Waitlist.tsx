@@ -1,5 +1,6 @@
-import { useState, type FormEvent } from "react";
+import { useState, type SubmitEvent } from "react";
 import { ArrowRight, CheckCircle2, LoaderCircle } from "lucide-react";
+import { supabase } from "../../lib/supabase";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -10,48 +11,41 @@ export default function Waitlist() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [message, setMessage] = useState("");
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+
     setStatus("loading");
     setMessage("");
 
-    const endpoint = import.meta.env.VITE_WAITLIST_ENDPOINT;
-
-    if (!endpoint) {
-      setStatus("error");
-      setMessage(
-        "The waitlist form is not connected yet. Please try again later.",
-      );
-      return;
-    }
-
     try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          business: business.trim(),
-        }),
+      const { error } = await supabase.from("waitlist_signups").insert({
+        full_name: name.trim(),
+        email: email.trim().toLowerCase(),
+        business_name: business.trim() || null,
       });
 
-      if (!response.ok) {
-        throw new Error("The signup could not be submitted.");
+      if (error) {
+        if (error.code === "23505") {
+          throw new Error("This email address is already on the waitlist.");
+        }
+
+        console.error("Supabase waitlist error:", error);
+        throw new Error("We couldn't submit your details. Please try again.");
       }
 
       setStatus("success");
       setMessage("You're on the list! We'll be in touch.");
+
       setName("");
       setEmail("");
       setBusiness("");
-    } catch {
+    } catch (error) {
       setStatus("error");
+
       setMessage(
-        "We couldn't submit your details. Please check your connection and try again.",
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
       );
     }
   }
