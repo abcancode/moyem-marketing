@@ -8,6 +8,7 @@ export default function Waitlist() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [business, setBusiness] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [message, setMessage] = useState("");
 
@@ -24,6 +25,7 @@ export default function Waitlist() {
         full_name: name.trim(),
         email: email.trim().toLowerCase(),
         business_name: business.trim() || null,
+        consent_agreed: consent,
       });
 
       if (error) {
@@ -41,6 +43,7 @@ export default function Waitlist() {
       setName("");
       setEmail("");
       setBusiness("");
+      setConsent(false);
     } catch (error) {
       setStatus("error");
 
@@ -146,6 +149,27 @@ export default function Waitlist() {
               />
             </div>
 
+            <div className="flex items-start gap-3">
+              <input
+                id="waitlist-consent"
+                name="consent"
+                type="checkbox"
+                required
+                checked={consent}
+                onChange={(event) => setConsent(event.target.checked)}
+                className="mt-1 h-4 w-4 shrink-0 cursor-pointer rounded border-[var(--color-border)] accent-teal-600 focus:ring-2 focus:ring-teal-500"
+              />
+
+              <label
+                htmlFor="waitlist-consent"
+                className="text-sm leading-6 text-[var(--color-muted)]"
+              >
+                I agree to Moyem processing my information to manage my waitlist
+                registration and send me updates about early access and the
+                product.
+              </label>
+            </div>
+
             <button
               type="submit"
               disabled={status === "loading"}
@@ -179,7 +203,8 @@ export default function Waitlist() {
             )}
 
             <p className="text-center text-xs leading-5 text-[var(--color-muted)]">
-              By joining, you agree to receive updates about Moyem.
+              Your information will only be used in accordance with Moyem's
+              privacy practices.
             </p>
           </form>
         </div>
