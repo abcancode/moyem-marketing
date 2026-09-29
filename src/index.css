@@ -1,20 +1,91 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap");
+/* Plus Jakarta Sans */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
+/* Tailwind CSS */
 @import "tailwindcss";
 
-@theme {
-  --font-heading: "Space Mono", monospace;
-  --font-body: "Plus Jakarta Sans", sans-serif;
+/* ========================================
+   MOYEM TYPOGRAPHY
+======================================== */
 
+/* Rostex Regular */
+@font-face {
+  font-family: "Rostex";
+  src: url("./assets/fonts/rostex-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Rostex Oblique */
+@font-face {
+  font-family: "Rostex";
+  src: url("./assets/fonts/rostex-oblique.otf") format("opentype");
+  font-weight: 400;
+  font-style: oblique;
+  font-display: swap;
+}
+
+/* Rostex Outline */
+@font-face {
+  font-family: "Rostex Outline";
+  src: url("./assets/fonts/rostex-outline.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Rostex Oblique Outline */
+@font-face {
+  font-family: "Rostex Oblique Outline";
+  src: url("./assets/fonts/rostex-obliqueoutline.otf") format("opentype");
+  font-weight: 400;
+  font-style: oblique;
+  font-display: swap;
+}
+
+/* ========================================
+   MOYEM DESIGN TOKENS
+======================================== */
+
+@theme {
+  /* Typography */
+  --font-heading: "Rostex", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-outline: "Rostex Outline", sans-serif;
+  --font-oblique-outline: "Rostex Oblique Outline", sans-serif;
+
+  /* Brand Colors */
   --color-moyem-blue: #0f387d;
   --color-moyem-accent: #416bff;
   --color-moyem-teal: #08b9b5;
   --color-moyem-dark: #0d5553;
 }
 
+/* ========================================
+   GLOBAL STYLES
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  min-width: 320px;
+  font-family: var(--font-body);
   background: #ffffff;
   color: #101828;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Form Elements */
+button,
+input,
+textarea {
+  font: inherit;
 }
