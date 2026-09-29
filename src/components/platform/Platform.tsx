@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 
 const platform = [
   {
+    id: "sales",
     name: "Sales",
     description:
       "Track leads through your pipeline, send quotes, manage deals, and keep your sales process moving.",
@@ -15,6 +16,7 @@ const platform = [
     button: "Explore Sales",
   },
   {
+    id: "finance",
     name: "Finance",
     description:
       "Stay on top of your business finances with clear records, automated invoicing, and actionable insights.",
@@ -27,6 +29,7 @@ const platform = [
     button: "Explore Finance",
   },
   {
+    id: "inventory",
     name: "Inventory",
     description:
       "Manage your stock, monitor product movement, and know what is available across your business.",
@@ -39,6 +42,7 @@ const platform = [
     button: "Explore Inventory",
   },
   {
+    id: "workspace",
     name: "Workspace",
     description:
       "Bring your business operations together in one organized workspace built around the way your team works.",
@@ -51,6 +55,7 @@ const platform = [
     button: "Explore Workspace",
   },
   {
+    id: "crm",
     name: "CRM",
     description:
       "Build stronger customer relationships with organized contact records, follow-ups, and customer insights.",
@@ -63,6 +68,7 @@ const platform = [
     button: "Explore CRM",
   },
   {
+    id: "hr",
     name: "HR",
     description:
       "Simplify people operations, keep employee information organized, and support your team as it grows.",
@@ -216,8 +222,36 @@ function PlatformIllustration({
 export default function Platform() {
   const [activePlatform, setActivePlatform] = useState<PlatformName>("Sales");
 
+  useEffect(() => {
+    const syncPlatformFromHash = () => {
+      const hash = window.location.hash.replace("#platform-", "");
+
+      const matchedPlatform = platform.find((item) => item.id === hash);
+
+      if (matchedPlatform) {
+        setActivePlatform(matchedPlatform.name);
+      }
+    };
+
+    syncPlatformFromHash();
+    window.addEventListener("hashchange", syncPlatformFromHash);
+
+    return () => {
+      window.removeEventListener("hashchange", syncPlatformFromHash);
+    };
+  }, []);
+
   const selectedPlatform =
     platform.find((p) => p.name === activePlatform) ?? platform[0];
+
+  const selectPlatform = (name: PlatformName) => {
+    const selected = platform.find((item) => item.name === name);
+
+    if (!selected) return;
+
+    setActivePlatform(selected.name);
+    window.history.replaceState(null, "", `#platform-${selected.id}`);
+  };
 
   return (
     <section
@@ -248,10 +282,10 @@ export default function Platform() {
                 key={p.name}
                 type="button"
                 role="tab"
-                id={`tab-${p.name.toLowerCase()}`}
+                id={`tab-${p.id}`}
                 aria-selected={isActive}
                 aria-controls="platform-panel"
-                onClick={() => setActivePlatform(p.name)}
+                onClick={() => selectPlatform(p.name)}
                 className={`min-w-[108px] rounded-full border px-6 py-2.5 text-sm transition-all duration-200 sm:min-w-[120px] sm:px-8 sm:text-base ${
                   isActive
                     ? "border-teal-800 bg-transparent font-medium text-teal-800 dark:border-teal-400 dark:text-teal-300"
@@ -267,7 +301,7 @@ export default function Platform() {
         <div
           id="platform-panel"
           role="tabpanel"
-          aria-labelledby={`tab-${activePlatform.toLowerCase()}`}
+          aria-labelledby={`tab-${selectedPlatform.id}`}
           className="mt-14 grid items-center gap-12 lg:mt-16 lg:grid-cols-2 lg:gap-16"
         >
           <div className="max-w-xl">
@@ -296,7 +330,15 @@ export default function Platform() {
             </ul>
 
             <a
-              href="#waitlist"
+              href={`#platform-${selectedPlatform.id}`}
+              onClick={(event) => {
+                event.preventDefault();
+                selectPlatform(selectedPlatform.name);
+                document.getElementById("platform-panel")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+              }}
               className="mt-10 inline-flex items-center gap-2 rounded-2xl bg-teal-800 px-5 py-4 text-sm font-medium text-white transition hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:bg-teal-600 dark:hover:bg-teal-500"
             >
               {selectedPlatform.button}
@@ -304,7 +346,7 @@ export default function Platform() {
             </a>
           </div>
 
-          <PlatformIllustration activePlatform={activePlatform} />
+          <PlatformIllustration activePlatform={selectedPlatform.name} />
         </div>
       </div>
     </section>

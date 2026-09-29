@@ -60,12 +60,12 @@ export default function Header() {
 
         {/* Desktop actions */}
         <div className="hidden items-center gap-5 md:flex">
-          <a
+          {/* <a
             href="https://app.moyem.com"
             className="text-base font-medium text-gray-900 transition-colors hover:text-teal-600 dark:text-slate-200 dark:hover:text-teal-300"
           >
             Login
-          </a>
+          </a> */}
 
           {themeButton}
           {/* <a
