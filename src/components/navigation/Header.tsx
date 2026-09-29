@@ -5,7 +5,7 @@ import moyemLogoLight from "../../assets/images/moyem-logo-light.png";
 import { useTheme } from "../../context/ThemeContext";
 
 const navigationLinks = [
-  { label: "Features", href: "#features" },
+  { label: "Platform", href: "#platform" },
   { label: "AI & Insights", href: "#ai-insights" },
   { label: "How it works", href: "#how-it-works" },
   { label: "Pricing", href: "#pricing" },

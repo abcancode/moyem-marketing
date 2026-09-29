@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 
-const features = [
+const platform = [
   {
     name: "Sales",
     description:
@@ -76,12 +76,12 @@ const features = [
   },
 ] as const;
 
-type FeatureName = (typeof features)[number]["name"];
+type PlatformName = (typeof platform)[number]["name"];
 
-function FeatureIllustration({
-  activeFeature,
+function PlatformIllustration({
+  activePlatform,
 }: {
-  activeFeature: FeatureName;
+  activePlatform: PlatformName;
 }) {
   return (
     <div className="relative mx-auto flex min-h-[320px] w-full max-w-[520px] items-center justify-center sm:min-h-[380px]">
@@ -95,7 +95,7 @@ function FeatureIllustration({
                 Moyem workspace
               </p>
               <h3 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
-                {activeFeature} overview
+                {activePlatform} overview
               </h3>
             </div>
             <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-800 dark:bg-teal-950 dark:text-teal-300">
@@ -137,7 +137,7 @@ function FeatureIllustration({
               viewBox="0 0 400 150"
               className="h-auto w-full"
               role="img"
-              aria-label={`${activeFeature} activity chart illustration`}
+              aria-label={`${activePlatform} activity chart illustration`}
             >
               {[25, 60, 95, 130].map((y) => (
                 <line
@@ -213,15 +213,15 @@ function FeatureIllustration({
   );
 }
 
-export default function Features() {
-  const [activeFeature, setActiveFeature] = useState<FeatureName>("Sales");
+export default function Platform() {
+  const [activePlatform, setActivePlatform] = useState<PlatformName>("Sales");
 
-  const selectedFeature =
-    features.find((feature) => feature.name === activeFeature) ?? features[0];
+  const selectedPlatform =
+    platform.find((p) => p.name === activePlatform) ?? platform[0];
 
   return (
     <section
-      id="features"
+      id="platform"
       className="bg-[var(--color-page)] px-5 py-20 text-[var(--color-text)] transition-colors duration-300 sm:px-8 lg:px-12 lg:py-28"
     >
       <div className="mx-auto max-w-7xl">
@@ -240,47 +240,47 @@ export default function Features() {
           role="tablist"
           aria-label="Moyem business tools"
         >
-          {features.map((feature) => {
-            const isActive = activeFeature === feature.name;
+          {platform.map((p) => {
+            const isActive = activePlatform === p.name;
 
             return (
               <button
-                key={feature.name}
+                key={p.name}
                 type="button"
                 role="tab"
-                id={`tab-${feature.name.toLowerCase()}`}
+                id={`tab-${p.name.toLowerCase()}`}
                 aria-selected={isActive}
-                aria-controls="feature-panel"
-                onClick={() => setActiveFeature(feature.name)}
+                aria-controls="platform-panel"
+                onClick={() => setActivePlatform(p.name)}
                 className={`min-w-[108px] rounded-full border px-6 py-2.5 text-sm transition-all duration-200 sm:min-w-[120px] sm:px-8 sm:text-base ${
                   isActive
                     ? "border-teal-800 bg-transparent font-medium text-teal-800 dark:border-teal-400 dark:text-teal-300"
                     : "border-[var(--color-border)] text-[var(--color-muted)] hover:border-teal-600 hover:text-teal-700 dark:hover:border-teal-400 dark:hover:text-teal-300"
                 }`}
               >
-                {feature.name}
+                {p.name}
               </button>
             );
           })}
         </div>
 
         <div
-          id="feature-panel"
+          id="platform-panel"
           role="tabpanel"
-          aria-labelledby={`tab-${activeFeature.toLowerCase()}`}
+          aria-labelledby={`tab-${activePlatform.toLowerCase()}`}
           className="mt-14 grid items-center gap-12 lg:mt-16 lg:grid-cols-2 lg:gap-16"
         >
           <div className="max-w-xl">
             <h3 className="font-heading text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl">
-              {selectedFeature.name}
+              {selectedPlatform.name}
             </h3>
 
             <p className="mt-4 max-w-md text-sm leading-7 text-[var(--color-muted)] sm:text-base">
-              {selectedFeature.description}
+              {selectedPlatform.description}
             </p>
 
             <ul className="mt-7 space-y-4">
-              {selectedFeature.points.map((point) => (
+              {selectedPlatform.points.map((point) => (
                 <li key={point} className="flex items-start gap-3">
                   <Check
                     size={20}
@@ -299,12 +299,12 @@ export default function Features() {
               href="#waitlist"
               className="mt-10 inline-flex items-center gap-2 rounded-2xl bg-teal-800 px-5 py-4 text-sm font-medium text-white transition hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:bg-teal-600 dark:hover:bg-teal-500"
             >
-              {selectedFeature.button}
+              {selectedPlatform.button}
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
 
-          <FeatureIllustration activeFeature={activeFeature} />
+          <PlatformIllustration activePlatform={activePlatform} />
         </div>
       </div>
     </section>
