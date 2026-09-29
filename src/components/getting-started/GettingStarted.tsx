@@ -405,12 +405,14 @@ export default function GettingStarted() {
       `}</style>
 
       <div className="mx-auto max-w-7xl">
-        <header className="mx-auto max-w-4xl text-center">
-          <h2 className="mx-auto max-w-4xl text-balance font-heading text-[clamp(1.75rem,4.5vw,3.5rem)] font-bold uppercase leading-[1.08] tracking-[-0.035em] text-white">
-            Let us get you up and running in minutes
+        <header className="mx-auto max-w-3xl text-center">
+          <h2 className="font-heading text-xl font-bold uppercase leading-relaxed tracking-normal text-white sm:text-2xl lg:text-3xl">
+            Let us get you up and running
+            <br className="hidden sm:block" />
+            <span className="sm:block">in minutes</span>
           </h2>
 
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/80 sm:mt-6 sm:text-base sm:leading-8">
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-white/80 sm:mt-8 sm:text-base sm:leading-8">
             No lengthy implementations. No consultants. Just workspace that
             works.
           </p>
