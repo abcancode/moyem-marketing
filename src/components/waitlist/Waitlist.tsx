@@ -79,9 +79,9 @@ export default function Waitlist() {
         </div>
 
         <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-page)] p-5 sm:p-7">
-          <h3 className="text-xl font-semibold text-[var(--color-text)]">
+          {/* <h3 className="text-xl font-semibold text-[var(--color-text)]">
             Join the waiting list
-          </h3>
+          </h3> */}
           <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">
             Tell us a little about yourself and your business.
           </p>
